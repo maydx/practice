@@ -5,7 +5,7 @@ public class Sort {
 	}
 
 	/** Sorts x starting at position start. */
-	private static void sort(String[] x, int start) {
+	private void sort(String[] x, int start) {
 	    if (start == x.length) {
 	        return;
         }
