@@ -5,7 +5,7 @@ public class ArrayDeque<T> {
     private int nextLast;
 
     public ArrayDeque() {
-        items = (T[]) new Object[4];
+        items = (T[]) new Object[8];
         size = 0;
         nextFirst = 2;
         nextLast = 3;
@@ -77,25 +77,37 @@ public class ArrayDeque<T> {
 }
 
     public T removeFirst(){
-        if(size > 0) {
-            int index = increase(nextFirst);
-            T x = items[index];
-            items[index] = null;
-            nextFirst = index;
-            return x;
+        if(isEmpty()) {
+            return null;
         }
-        return null;
+        int index = increase(nextFirst);
+        T x = items[index];
+        items[index] = null;
+        nextFirst = index;
+        size -= 1;
+
+        double r = size / (double) items.length;
+        if (r < 0.25 && items.length >= 16) {
+            resize(items.length / 2);
+        }
+        return x;
     }
 
     public T removeLast(){
-        if(size > 0) {
-            int index = decrease(nextLast);
-            T x = items[index];
-            items[index] = null;
-            nextLast = index;
-            return x;
+        if(isEmpty()) {
+            return null;
         }
-        return null;
+        int index = decrease(nextLast);
+        T x = items[index];
+        items[index] = null;
+        nextLast = index;
+        size -= 1;
+
+        double r = size / (double) items.length;
+        if (r < 0.25 && items.length >= 16) {
+            resize(items.length / 2);
+        }
+        return x;
     }
 
     public T get(int index){
